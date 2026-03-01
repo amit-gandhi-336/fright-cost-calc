@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Freight Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+      :root {
+        --primary: #4f46e5;
+        --primary-hover: #4338ca;
+        --bg: #f8fafc;
+        --card-bg: #ffffff;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --border: #e2e8f0;
+        --accent: #f1f5f9;
+        --danger: #dc2626;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg);
+        color: var(--text-main);
+        margin: 0;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--card-bg);
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 32px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 20px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .grid-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-muted);
+      }
+
+      input, select {
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+
+      input:focus, select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+      }
+
+      .table-container {
+        overflow-x: auto;
+        margin: 24px 0;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th {
+        background: var(--accent);
+        padding: 12px 16px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        text-align: left;
+      }
+
+      td {
+        padding: 10px 16px;
+        border-top: 1px solid var(--border);
+      }
+
+      .btn-secondary {
+        background: #fff;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        padding: 8px 16px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .btn-secondary:hover {
+        background: var(--primary);
+        color: white;
+      }
+
+      .btn-primary {
+        width: 100%;
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 16px;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      #output {
+        margin-top: 40px;
+        padding-top: 30px;
+      }
+
+      .result-card {
+        background: var(--accent);
+        padding: 30px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+      }
+
+      .summary-row.total {
+        border-top: 2px solid var(--primary);
+        margin-top: 15px;
+        padding-top: 15px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--primary);
+      }
+
+      .per-unit-row {
+        border-top: 1px solid #fee2e2;
+        color: var(--danger);
+        margin-top: 8px;
+        padding-top: 15px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      @media print {
+        .btn-primary, .btn-secondary, .grid-form, .table-container, label, .container > h2 { display: none; }
+        body { padding: 0; background: white; }
+        .container { box-shadow: none; max-width: 100%; padding: 0; }
+        .result-card { border: none; background: white; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <h2>Freight Cost Calculator</h2>
+      </header>
+
+      <div class="grid-form">
+        <div class="input-group">
+          <label>Customer Name</label>
+          <input type="text" id="customerName" placeholder="Client Name" />
+        </div>
+        <div class="input-group">
+          <label>Destination Pincode</label>
+          <input type="number" id="pincode" placeholder="e.g. 110001" />
+        </div>
+        <div class="input-group">
+          <label>Serviceability / ODA</label>
+          <select id="odaType">
+            <option value="serviceable">Standard Serviceable</option>
+            <option value="A">ODA A</option>
+            <option value="B">ODA B</option>
+            <option value="C">ODA C</option>
+            <option value="D">ODA D</option>
+            <option value="E">ODA E</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table id="items">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Weight (kg)</th>
+              <th>Rate (₹)</th>
+              <th>Qty</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color: var(--text-muted); font-weight: 600;">1</td>
+              <td><input type="number" step="any"></td>
+              <td><input type="number" step="any"></td>
+              <td><input type="number"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-secondary" onclick="addItem()">+ Add Item</button>
+        <button class="btn-secondary" style="border-color: #cbd5e1; color: #64748b;" onclick="location.reload()">Reset</button>
+      </div>
+
+      <button class="btn-primary" onclick="calculateFreight()">Calculate Final Freight</button>
+
+      <div id="output"></div>
+    </div>
+
+    <script>
+      let itemCount = 1;
+      function addItem() {
+        itemCount++;
+        const table = document.getElementById("items").getElementsByTagName('tbody')[0];
+        const row = table.insertRow();
+        row.innerHTML = `
+          <td style="color: var(--text-muted); font-weight: 600;">${itemCount}</td>
+          <td><input type="number" step="any"></td>
+          <td><input type="number" step="any"></td>
+          <td><input type="number"></td>
+        `;
+      }
+
+      const stateRates = [
+        { state: "Jammu & Kashmir", start: 180, end: 194, rate: 13 },
+        { state: "Himachal Pradesh", start: 171, end: 177, rate: 13 },
+        { state: "Punjab", start: 140, end: 160, rate: 7 },
+        { state: "Chandigarh", start: 160, end: 160, rate: 7 },
+        { state: "Uttarakhand", start: 244, end: 263, rate: 7 },
+        { state: "Haryana", start: 121, end: 136, rate: 7 },
+        { state: "Delhi", start: 110, end: 110, rate: 7 },
+        { state: "Rajasthan", start: 301, end: 345, rate: 7 },
+        { state: "Uttar Pradesh", start: 201, end: 285, rate: 7 },
+        { state: "Bihar", start: 800, end: 855, rate: 12 },
+        { state: "Sikkim", start: 737, end: 737, rate: 18 },
+        { state: "Arunachal Pradesh", start: 790, end: 792, rate: 18 },
+        { state: "Nagaland", start: 797, end: 798, rate: 18 },
+        { state: "Manipur", start: 795, end: 795, rate: 18 },
+        { state: "Mizoram", start: 796, end: 796, rate: 18 },
+        { state: "Tripura", start: 799, end: 799, rate: 18 },
+        { state: "Meghalaya", start: 793, end: 794, rate: 18 },
+        { state: "Assam", start: 781, end: 788, rate: 16 },
+        { state: "West Bengal", start: 700, end: 743, rate: 10 },
+        { state: "Jharkhand", start: 813, end: 835, rate: 13 },
+        { state: "Odisha", start: 751, end: 770, rate: 13 },
+        { state: "Chhattisgarh", start: 490, end: 497, rate: 8 },
+        { state: "Madhya Pradesh", start: 450, end: 488, rate: 7 },
+        { state: "Gujarat", start: 360, end: 396, rate: 5 },
+        { state: "Daman & Diu", start: 362, end: 362, rate: 5 },
+        { state: "Dadra & Nagar Haveli", start: 396, end: 396, rate: 5 },
+        { state: "Maharashtra", start: 400, end: 445, rate: 5 },
+        { state: "Goa", start: 403, end: 403, rate: 5 },
+        { state: "Karnataka", start: 560, end: 591, rate: 7 },
+        { state: "Kerala", start: 670, end: 695, rate: 9 },
+        { state: "Tamil Nadu", start: 600, end: 643, rate: 7 },
+        { state: "Puducherry", start: 533, end: 533, rate: 7 },
+        { state: "Andaman & Nicobar", start: 744, end: 744, rate: 0 },
+        { state: "Telangana", start: 500, end: 509, rate: 7 },
+        { state: "Andhra Pradesh", start: 500, end: 535, rate: 7 },
+      ];
+
+      const odaSlabs = {
+        A: [{min:1, max:100, charge:700}, {min:101, max:250, charge:850}, {min:251, max:500, charge:1650}, {min:501, max:1000, charge:3300}, {min:1001, max:1500, charge:5000}, {min:1501, max:2000, charge:6500}, {min:2001, max:4000, charge:11000}],
+        B: [{min:1, max:100, charge:750}, {min:101, max:250, charge:1100}, {min:251, max:500, charge:2250}, {min:501, max:1000, charge:4000}, {min:1001, max:1500, charge:5500}, {min:1501, max:2000, charge:7000}, {min:2001, max:4000, charge:12500}],
+        C: [{min:1, max:100, charge:1450}, {min:101, max:250, charge:2250}, {min:251, max:500, charge:3300}, {min:501, max:1000, charge:5000}, {min:1001, max:1500, charge:6000}, {min:1501, max:2000, charge:8250}, {min:2001, max:4000, charge:15000}],
+        D: [{min:1, max:100, charge:2750}, {min:101, max:250, charge:4500}, {min:251, max:500, charge:6600}, {min:501, max:1000, charge:10000}, {min:1001, max:1500, charge:11000}, {min:1501, max:2000, charge:12500}, {min:2001, max:4000, charge:18000}],
+        E: [{min:1, max:100, charge:5500}, {min:101, max:250, charge:9000}, {min:251, max:500, charge:11000}, {min:501, max:1000, charge:12500}, {min:1001, max:1500, charge:12500}, {min:1501, max:2000, charge:15000}, {min:2001, max:4000, charge:25000}]
+      };
+
+      function calculateFreight() {
+        let customer = document.getElementById("customerName").value || "Valued Customer";
+        let totalQty = 0, totalWeight = 0, invoiceValue = 0;
+
+        document.querySelectorAll("#items tbody tr").forEach((r) => {
+          let inp = r.querySelectorAll("input");
+          let w = +inp[0].value || 0;
+          let r1 = +inp[1].value || 0;
+          let q = +inp[2].value || 0;
+          totalQty += q;
+          totalWeight += w * q;
+          invoiceValue += r1 * q;
+        });
+
+        totalWeight = Math.ceil(totalWeight);
+        let invoiceWithGST = invoiceValue + Math.ceil(invoiceValue * 0.18);
+        let pin = document.getElementById("pincode").value;
+        let first3 = parseInt(pin.substring(0, 3));
+        let stateName = "N/A", stateRate = 0;
+
+        stateRates.forEach((s) => {
+          if (first3 >= s.start && first3 <= s.end) {
+            stateName = s.state;
+            stateRate = s.rate;
+          }
+        });
+
+        let stateFreight = totalWeight * stateRate;
+        let oda = document.getElementById("odaType").value;
+        let odaCharge = 0;
+        if (oda !== "serviceable" && odaSlabs[oda]) {
+          odaSlabs[oda].forEach((s) => {
+            if (totalWeight >= s.min && totalWeight <= s.max) {
+              odaCharge = Math.ceil(s.charge / 2);
+            }
+          });
+        }
+
+        let docket = 100, fod = 100;
+        let fov = Math.ceil(invoiceWithGST * 0.001);
+        let beforeFSC = Math.ceil(stateFreight + docket + fod + fov + odaCharge);
+        let fsc = Math.ceil(beforeFSC * 0.08);
+        let basicFreight = Math.ceil(beforeFSC + fsc);
+        let gst = Math.ceil(basicFreight * 0.18);
+        let totalWithTax = basicFreight + gst;
+        let perTyre = totalQty > 0 ? Math.ceil(basicFreight / totalQty) : 0;
+
+        document.getElementById("output").innerHTML = `
+          <div class="result-card">
+            <h2 style="text-align: center; color: var(--primary); margin-top: 0; padding-bottom: 20px; border-bottom: 2px solid var(--border);">
+              Freight Quote: ${customer}
+            </h2>
+            
+            <div class="summary-row"><span>Destination State:</span> <strong>${stateName}</strong></div>
+            <div class="summary-row"><span>Total Quantity:</span> <strong>${totalQty} Nos</strong></div>
+            <div class="summary-row"><span>Total Weight:</span> <strong>${totalWeight} kg</strong></div>
+            <div class="summary-row"><span>Basic Rate (₹${stateRate}/kg):</span> <strong>₹${stateFreight}</strong></div>
+            <div class="summary-row"><span>ODA Charges:</span> <strong>₹${odaCharge}</strong></div>
+            <div class="summary-row"><span>Fuel Surcharge (FSC 8%):</span> <strong>₹${fsc}</strong></div>
+            <div class="summary-row"><span>Fixed (Docket/FOD/FOV):</span> <strong>₹${docket + fod + fov}</strong></div>
+            
+            <div class="summary-row total">
+                <span>Total Payable (Incl. GST):</span> 
+                <span>₹${totalWithTax}</span>
+            </div>
+
+            <div class="per-unit-row">
+                <span>Per Unit Cost (Excl. GST):</span> 
+                <span style="font-size: 1.5rem; font-weight: 800;">₹${perTyre}</span>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+              <button class="btn-secondary" onclick="window.print()" style="width: 100%; padding: 12px;">Download / Print PDF</button>
+            </div>
+          </div>
+        `;
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }
+    </script>
+  </body>
+</html>
