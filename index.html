@@ -18,124 +18,31 @@
         --danger: #dc2626;
       }
 
-      body {
-        font-family: 'Inter', sans-serif;
-        background-color: var(--bg);
-        color: var(--text-main);
-        margin: 0;
-        padding: 40px 20px;
-      }
-
-      .container {
-        max-width: 900px;
-        margin: 0 auto;
-        background: var(--card-bg);
-        padding: 40px;
-        border-radius: 16px;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-      }
-
-      header {
-        text-align: center;
-        margin-bottom: 32px;
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 20px;
-      }
-
+      body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; padding: 40px 20px; }
+      .container { max-width: 900px; margin: 0 auto; background: var(--card-bg); padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+      header { text-align: center; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
       h2 { margin: 0; font-size: 1.75rem; font-weight: 700; color: #0f172a; }
-
-      .grid-form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin-bottom: 30px;
-      }
-
+      .grid-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
       .input-group { display: flex; flex-direction: column; gap: 8px; }
-
       label { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); }
-
-      input, select {
-        padding: 10px 14px;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        font-size: 14px;
-      }
-
-      .table-container {
-        overflow-x: auto;
-        margin: 24px 0;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-      }
-
+      input, select { padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; }
+      .table-container { overflow-x: auto; margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; }
       table { width: 100%; border-collapse: collapse; }
       th { background: var(--accent); padding: 12px 16px; font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); text-align: left; }
       td { padding: 10px 16px; border-top: 1px solid var(--border); }
-
-      .btn-secondary {
-        background: #fff; color: var(--primary); border: 1px solid var(--primary);
-        padding: 8px 16px; font-weight: 600; border-radius: 8px; cursor: pointer;
-      }
-
-      .btn-primary {
-        width: 100%; background: var(--primary); color: white; border: none;
-        padding: 16px; font-size: 16px; font-weight: 700; border-radius: 8px; cursor: pointer; margin-top: 20px;
-      }
-
+      .btn-secondary { background: #fff; color: var(--primary); border: 1px solid var(--primary); padding: 8px 16px; font-weight: 600; border-radius: 8px; cursor: pointer; }
+      .btn-primary { width: 100%; background: var(--primary); color: white; border: none; padding: 16px; font-size: 16px; font-weight: 700; border-radius: 8px; cursor: pointer; margin-top: 20px; }
       .result-card { background: var(--accent); padding: 30px; border-radius: 12px; border: 1px solid var(--border); margin-top: 30px; }
-      
-      .summary-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 0;
-        font-size: 15px;
-      }
+      .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; font-size: 15px; }
       .summary-row strong { color: #1e293b; font-weight: 700; }
       .summary-row span { color: #64748b; }
+      .extra-info-row { padding: 12px; margin: 5px 0 15px 0; font-size: 13px; color: #4338ca; background: #eff6ff; border-left: 4px solid var(--primary); border-radius: 4px; text-align: left; line-height: 1.5; }
+      .summary-row.total { border-top: 2px solid var(--primary); margin-top: 15px; padding-top: 20px; font-weight: 700; font-size: 1.25rem; color: var(--primary); }
+      .per-unit-row { color: var(--danger); margin-top: 15px; padding-top: 10px; font-weight: 800; font-size: 1.8rem; display: flex; justify-content: space-between; align-items: center; }
 
-      .extra-info-row {
-        padding: 12px;
-        margin: 5px 0 15px 0;
-        font-size: 13px;
-        color: #4338ca;
-        background: #eff6ff;
-        border-left: 4px solid var(--primary);
-        border-radius: 4px;
-        text-align: left;
-        line-height: 1.5;
-      }
-
-      .summary-row.total {
-        border-top: 2px solid var(--primary);
-        margin-top: 15px;
-        padding-top: 20px;
-        font-weight: 700;
-        font-size: 1.25rem;
-        color: var(--primary);
-      }
-      
-      .per-unit-row {
-        color: var(--danger);
-        margin-top: 15px;
-        padding-top: 10px;
-        font-weight: 800;
-        font-size: 1.8rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      /* PRINT STYLES */
       @media print {
-        @page {
-          margin: 0.5cm; /* Controls page margins */
-          size: auto;   /* Logic to remove browser headers/footers */
-        }
-        body { margin: 1cm; background: #fff; }
+        @page { margin: 0.5cm; size: auto; }
         header h2 { display: none; } 
-        header { border-bottom: none; margin-bottom: 0; padding: 0; }
         .btn-primary, .btn-secondary, .grid-form, .table-container, label { display: none; }
         .container { box-shadow: none; padding: 0; width: 100%; }
         .result-card { background: #fff; border: 1px solid #eee; padding: 20px; }
@@ -145,7 +52,7 @@
 
   <body>
     <div class="container">
-      <header><h2 id="mainHeading">Freight Cost Calculator</h2></header>
+      <header><h2>Freight Cost Calculator</h2></header>
 
       <div class="grid-form">
         <div class="input-group"><label>Customer Name</label><input type="text" id="customerName" placeholder="e.g. Amit"></div>
@@ -165,7 +72,7 @@
 
       <div class="table-container">
         <table id="items">
-          <thead><tr><th>Item</th><th>Weight (kg)</th><th>Rate (₹)</th><th>Qty</th></tr></thead>
+          <thead><tr><th>Item</th><th>Weight (kg)</th><th>Invoice Rate (₹)</th><th>Qty</th></tr></thead>
           <tbody>
             <tr><td style="color: var(--text-muted); font-weight: 600;">1</td>
             <td><input type="number" step="any"></td><td><input type="number" step="any"></td><td><input type="number"></td></tr>
@@ -179,7 +86,6 @@
       </div>
 
       <button class="btn-primary" onclick="calculateFreight()">Calculate Final Freight</button>
-
       <div id="output"></div>
     </div>
 
@@ -196,18 +102,19 @@
         { state: "Haryana", start: 121, end: 136, rate: 7 },
         { state: "Delhi", start: 110, end: 110, rate: 7 },
         { state: "Maharashtra", start: 400, end: 445, rate: 5 },
-        // ... (Add other state data here)
+        { state: "Gujarat", start: 360, end: 396, rate: 5 }
       ];
 
       const odaSlabs = {
-        A: [{min:1, max:4000, charge:11000}], 
-        B: [{min:1, max:4000, charge:12500}],
-        C: [{min:1, max:4000, charge:15000}],
-        D: [{min:1, max:4000, charge:18000}],
-        E: [{min:1, max:4000, charge:25000}]
+        A: [{min:1, max:100, charge:700}, {min:101, max:250, charge:850}, {min:251, max:500, charge:1650}, {min:501, max:1000, charge:3300}, {min:1001, max:1500, charge:5000}, {min:1501, max:2000, charge:6500}, {min:2001, max:4000, charge:11000}],
+        B: [{min:1, max:100, charge:750}, {min:101, max:250, charge:1100}, {min:251, max:500, charge:2250}, {min:501, max:1000, charge:4000}, {min:1001, max:1500, charge:5500}, {min:1501, max:2000, charge:7000}, {min:2001, max:4000, charge:12500}],
+        C: [{min:1, max:100, charge:1450}, {min:101, max:250, charge:2250}, {min:251, max:500, charge:3300}, {min:501, max:1000, charge:5000}, {min:1001, max:1500, charge:6000}, {min:1501, max:2000, charge:8250}, {min:2001, max:4000, charge:15000}],
+        D: [{min:1, max:100, charge:2750}, {min:101, max:250, charge:4500}, {min:251, max:500, charge:6600}, {min:501, max:1000, charge:10000}, {min:1001, max:1500, charge:11000}, {min:1501, max:2000, charge:12500}, {min:2001, max:4000, charge:18000}],
+        E: [{min:1, max:100, charge:5500}, {min:101, max:250, charge:9000}, {min:251, max:500, charge:11000}, {min:501, max:1000, charge:12500}, {min:1001, max:1500, charge:12500}, {min:1501, max:2000, charge:15000}, {min:2001, max:4000, charge:25000}]
       };
 
-      const extraKgRates = { A: 3, B: 3, C: 5, D: 7, E: 8 };
+      // PER-KG RATES (NOW CUT IN HALF)
+      const extraKgRates = { A: 1.5, B: 1.5, C: 2.5, D: 3.5, E: 4.0 };
 
       function calculateFreight() {
         const customer = document.getElementById("customerName").value || "Customer";
@@ -215,31 +122,40 @@
 
         document.querySelectorAll("#items tbody tr").forEach((r) => {
           let inp = r.querySelectorAll("input");
-          let w = +inp[0].value || 0, r1 = +inp[1].value || 0, q = +inp[2].value || 0;
-          totalQty += q; totalWeight += w * q; invoiceValue += r1 * q;
+          let weight = parseFloat(inp[0].value) || 0;
+          let rate = parseFloat(inp[1].value) || 0;
+          let qty = parseInt(inp[2].value) || 0;
+          
+          totalWeight += weight * qty;
+          invoiceValue += rate * qty;
+          totalQty += qty;
         });
 
         totalWeight = Math.ceil(totalWeight);
         const pin = document.getElementById("pincode").value;
         const first3 = parseInt(pin.substring(0, 3));
-        let stateName = "Haryana", stateRate = 7;
+        let stateName = "Not Found", stateRate = 0;
         stateRates.forEach((s) => { if (first3 >= s.start && first3 <= s.end) { stateName = s.state; stateRate = s.rate; } });
 
         let basicRateCharge = totalWeight * stateRate;
         const oda = document.getElementById("odaType").value;
-        let odaCharge = 0;
-        let extraInfo = "";
+        let odaCharge = 0, extraInfo = "";
 
         if (oda !== "serviceable") {
-          let slabMax = Math.ceil(odaSlabs[oda][0].charge / 2);
+          let slabs = odaSlabs[oda];
+          
           if (totalWeight <= 4000) {
-            odaCharge = slabMax; 
+            // Apply Fixed Slab Prices
+            slabs.forEach((s) => { 
+                if (totalWeight >= s.min && totalWeight <= s.max) {
+                    odaCharge = Math.ceil(s.charge / 2); 
+                }
+            });
           } else {
-            let extraWeight = totalWeight - 4000;
+            // APPLY PER-KG PRICE FOR OVERALL WEIGHT (OVER 4000KG)
             let perKg = extraKgRates[oda];
-            let extraCost = extraWeight * perKg;
-            odaCharge = slabMax + extraCost;
-            extraInfo = `<strong>ODA Calculation Detail:</strong><br>Slab for 4000kg: ₹${slabMax}<br>Extra Weight: ${extraWeight}kg × ₹${perKg}/kg = ₹${extraCost}`;
+            odaCharge = Math.ceil(totalWeight * perKg);
+            extraInfo = `<strong>Overall Weight Logic Applied (>4000kg):</strong><br>Total Weight (${totalWeight}kg) × Overall Rate (₹${perKg}/kg) = ₹${odaCharge}`;
           }
         }
 
@@ -251,10 +167,8 @@
         let subtotalExclGST = Math.ceil(beforeFSC + fsc);
         let gst = Math.ceil(subtotalExclGST * 0.18);
         let totalWithTax = subtotalExclGST + gst;
-        
         let perTyre = totalQty > 0 ? (subtotalExclGST / totalQty).toFixed(2) : 0;
 
-        // Set the Page Title for Filename Suggestion
         const today = new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
         document.title = `${customer} - ${today}`;
 
@@ -269,17 +183,8 @@
             ${extraInfo ? `<div class="extra-info-row">${extraInfo}</div>` : ''}
             <div class="summary-row"><span>Fuel Surcharge (FSC 8%):</span> <strong>₹${fsc}</strong></div>
             <div class="summary-row"><span>Fixed (Docket/FOD/FOV):</span> <strong>₹${docket + fod + fov}</strong></div>
-            
-            <div class="summary-row total">
-                <span>Total Payable (Incl. GST):</span> 
-                <span>₹${totalWithTax}</span>
-            </div>
-
-            <div class="per-unit-row">
-                <span>Per Unit Cost (Excl. GST):</span> 
-                <span>₹${perTyre}</span>
-            </div>
-
+            <div class="summary-row total"><span>Total Payable (Incl. GST):</span> <span>₹${totalWithTax}</span></div>
+            <div class="per-unit-row"><span>Per Unit Cost (Excl. GST):</span> <span>₹${perTyre}</span></div>
             <button class="btn-secondary" onclick="window.print()" style="width: 100%; margin-top: 25px;">Download / Print PDF</button>
           </div>`;
       }
